@@ -27,6 +27,19 @@
      <string>Алгоритм Монте-Карло (нахождение числа pi)</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>119</x>
+      <y>181</y>
+      <width>531</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Алгоритм Лас-Вегаса (решение задачи N-королев)</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

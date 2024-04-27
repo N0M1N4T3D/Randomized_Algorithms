@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "montecarlo.h" // Включаем заголовочный файл MonteCarlo
+#include "montecarlo.h"
+#include "lasvegas.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -22,7 +23,7 @@ void MainWindow::on_pushButton_clicked()
     MonteCarlo *newWindow = new MonteCarlo();
 
     // Устанавливаем параметры нового окна
-    newWindow->setFixedSize(1000, 1000);
+    newWindow->setFixedSize(800, 800);
     newWindow->move(100, 100);
     newWindow->setWindowTitle("Алгоритм Монте-Карло: Нахождение числа Pi");
 
@@ -34,3 +35,14 @@ void MainWindow::on_pushButton_clicked()
     // Отображаем новое окно
     newWindow->show();
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    lasvegas *newWindow = new lasvegas();
+    newWindow->setWindowTitle("Алгоритм Лас-Вегаса: Решение N-queens");
+    QPalette palette;
+    newWindow->setAutoFillBackground(true);
+    newWindow->setPalette(palette);
+    newWindow->show();
+}
+
