@@ -7,14 +7,18 @@ namespace Ui {
 class sherwood;
 }
 
+class QApplication; // Предварительное объявление класса QApplication
+
 class sherwood : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit sherwood(QWidget *parent = nullptr);
+    explicit sherwood(QApplication *app, QWidget *parent = nullptr);
+    void mainp();
     ~sherwood();
+private:
+    QApplication *m_app; // Указатель на QApplication
 protected:
-    int main(int argc, char *argv[]);
     int sherwoodBinarySearch(const QVector<int>& arr, int value, QTextEdit *outputTextEdit);
 };
 

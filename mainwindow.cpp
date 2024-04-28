@@ -3,6 +3,7 @@
 #include <QInputDialog>
 #include "montecarlo.h"
 #include "lasvegas.h"
+#include "sherwood.h"
 double n;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -51,9 +52,19 @@ void MainWindow::on_pushButton_2_clicked()
     newWindow->setWindowTitle("Алгоритм Лас-Вегаса: Решение N-queens");
     bool ok;
     n = QInputDialog::getDouble(this, "Введите число", "Введите значение n:", 8, 4, 300, 2, &ok);
-    QPalette palette;
-    newWindow->setAutoFillBackground(true);
-    newWindow->setPalette(palette);
-    newWindow->show();
+    if (ok) {
+        QPalette palette;
+        newWindow->setAutoFillBackground(true);
+        newWindow->setPalette(palette);
+        newWindow->show();
+    }
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    sherwood *newWindow = new sherwood(qApp); // Передаем указатель на QApplication
+    newWindow->setWindowTitle("Шервудский алгоритм: Бинарный поиск");
+    newWindow->mainp(); // Вызываем метод для создания интерфейса
 }
 
