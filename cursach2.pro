@@ -12,12 +12,14 @@ SOURCES += \
     lasvegas.cpp \
     main.cpp \
     mainwindow.cpp \
-    montecarlo.cpp
+    montecarlo.cpp \
+    sherwood.cpp
 
 HEADERS += \
     lasvegas.h \
     mainwindow.h \
-    montecarlo.h
+    montecarlo.h \
+    sherwood.h
 
 FORMS += \
     lasvegas.ui \
