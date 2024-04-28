@@ -68,3 +68,9 @@ void MainWindow::on_pushButton_3_clicked()
     newWindow->mainp(); // Вызываем метод для создания интерфейса
 }
 
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QCoreApplication::quit(); // Выход из приложения
+}
+
