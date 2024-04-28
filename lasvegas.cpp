@@ -1,15 +1,16 @@
 #include "lasvegas.h"
+#include "ui_lasvegas.h"
 #include <QPainter>
 #include <QLabel>
 #include <QPixmap>
 #include <iostream>
 #include <ctime>
 #include <vector>
-#define N 8
+extern double n;
+#define N n
 using namespace std;
 enum { FALSE, TRUE };
 int nTrials = 0;
-
 
 int nextInt(int n) // Generate a random number between 0 ~ n
 {

@@ -17,6 +17,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override; // Объявление метода paintEvent
+    double getNValue();
 };
 
 #endif // MONTECARLO_H

@@ -1,14 +1,17 @@
 #include "montecarlo.h"
+#include "ui_montecarlo.h"
 #include <QApplication>
 #include <QtWidgets>
 #include <QPainter>
 #include <QtMath>
+#include <QInputDialog>
 using namespace std;
-
+extern double n;
 
 MonteCarlo::MonteCarlo(QWidget *parent)
     : QMainWindow(parent)
 {
+    void getNValue();
     void paintEvent(QPaintEvent *event);
 }
 
@@ -28,7 +31,6 @@ void MonteCarlo::paintEvent(QPaintEvent *event) {
     p.drawLine(0, 700, 730, 700);
     p.drawText(QRect(30,0,20,100), Qt::AlignCenter, "1");
     p.drawText(QRect(690,347,20,730), Qt::AlignCenter, "1");
-    double n = 100000; // количество испытаний
     double x, y, z, pi;
     int count = 0;
     for (int d = 0; d < n; d++)
