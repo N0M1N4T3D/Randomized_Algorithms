@@ -1,65 +1,57 @@
 #include "montecarlo.h"
-#include "ui_montecarlo.h"
-#include <QApplication>
-#include <QtWidgets>
-#include <QPainter>
-#include <QtMath>
-#include <QInputDialog>
-using namespace std;
-extern double n;
+#include <cstdlib>
+#include <cmath>
+#include <QMessageBox>
 
-MonteCarlo::MonteCarlo(QWidget *parent)
-    : QMainWindow(parent)
+MonteCarlo::MonteCarlo(QObject *parent) : QObject(parent)
 {
-    void getNValue();
-    void paintEvent(QPaintEvent *event);
+
 }
 
-void MonteCarlo::paintEvent(QPaintEvent *event) {
-    int seed = time(NULL);
-    srand(seed);
-    QRectF rectangle(-600.0, 50.0, 1300.0, 1300.0), polygon(-600.0, 50.0, 1300.0, 1300.0);
-    QPainter p(this);
-    p.setPen(QPen(QColor("blue"),Qt::SolidLine));
-    p.drawEllipse(rectangle);
-    p.setPen(QPen(QColor("red"),Qt::SolidLine));
-    p.drawPolygon(polygon);
-    p.setPen(QPen(QColor("black"),Qt::SolidLine));
-    p.drawLine(50, 25, 50, 750);
-    p.drawLine(0, 700, 730, 700);
-    p.drawLine(50, 25, 50, 750);
-    p.drawLine(0, 700, 730, 700);
-    p.drawText(QRect(30,0,20,100), Qt::AlignCenter, "1");
-    p.drawText(QRect(690,347,20,730), Qt::AlignCenter, "1");
-    double x, y, z, pi;
-    int count = 0;
-    for (int d = 0; d < n; d++)
-    {
-        x = (float)rand() / RAND_MAX;
-        y = (float)rand() / RAND_MAX;
-        z = x * x + y * y;
-        if (z <= 1) {
-            p.setPen(QPen(QColor("blue"),Qt::SolidLine));
-            p.drawPoint(x * 650 + 50, 650 - y * 650 + 50);
-            count++;
-        }
-        else {
-
-            p.setPen(QPen(QColor("red"),Qt::SolidLine));
-            p.drawPoint(x * 650 + 50,650 - y * 650 + 50);
-        }
+// Функция для вычисления (a^b) % m используя быстрое возведение в степень
+long long MonteCarlo::powerMod(long long a, long long b, long long m) {
+    long long result = 1;
+    a = a % m;
+    while (b > 0) {
+        if (b & 1)
+            result = (result * a) % m;
+        b >>= 1;
+        a = (a * a) % m;
     }
-    pi = 4.0 * count / n;
-    p.setPen (QPen(Qt::black,Qt::SolidLine));
-    p.drawText(QRect(0,0,100,25), Qt::AlignCenter, QString::number(n, 'd', 0));
-    p.drawText(QRect(0,0,100,50), Qt::AlignCenter, QString::number(pi, 'f', 10));
-    // Инициализация интерфейса
-    // Например: ui = new MonteCarlo();
+    return result;
 }
 
-MonteCarlo::~MonteCarlo()
-{
-    // Освобождение памяти, выделенной для интерфейса
-    // Например: delete ui;
-}
+// Метод для проверки числа на простоту с использованием теста Миллера-Рабина
+bool MonteCarlo::millerRabinTest(long long n, int k) {
+    if (n <= 1)
+        return false;
+    if (n <= 3)
+        return true;
+    if (n % 2 == 0)
+        return false;
 
+    long long d = n - 1;
+    int s = 0;
+    while (d % 2 == 0) {
+        d /= 2;
+        s++;
+    }
+
+    for (int i = 0; i < k; i++) {
+        long long a = 2 + rand() % (n - 3);
+        long long x = powerMod(a, d, n);
+        if (x == 1 || x == n - 1)
+            continue;
+        bool prime = false;
+        for (int j = 1; j < s; j++) {
+            x = (x * x) % n;
+            if (x == n - 1) {
+                prime = true;
+                break;
+            }
+        }
+        if (!prime)
+            return false;
+    }
+    return true;
+}

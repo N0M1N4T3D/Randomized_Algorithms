@@ -18,22 +18,22 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>20</y>
+      <y>30</y>
       <width>531</width>
-      <height>111</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="text">
-     <string>Алгоритм Монте-Карло (нахождение числа pi)</string>
+     <string>Числовой вероятностный алгоритм (нахождение числа pi)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>119</x>
-      <y>181</y>
+      <x>120</x>
+      <y>230</y>
       <width>531</width>
-      <height>101</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="text">
@@ -43,10 +43,10 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>119</x>
-      <y>311</y>
+      <x>120</x>
+      <y>330</y>
       <width>531</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="text">
@@ -64,6 +64,19 @@
     </property>
     <property name="text">
      <string>Выход</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>130</y>
+      <width>531</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Алгоритм Монте-Карло (Тест Миллера-Рабина)</string>
     </property>
    </widget>
   </widget>

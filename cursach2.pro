@@ -13,18 +13,21 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     montecarlo.cpp \
+    numerical_probabilistic.cpp \
     sherwood.cpp
 
 HEADERS += \
     lasvegas.h \
     mainwindow.h \
     montecarlo.h \
+    numerical_probabilistic.h \
     sherwood.h
 
 FORMS += \
     lasvegas.ui \
     mainwindow.ui \
-    montecarlo.ui
+    montecarlo.ui \
+    numerical_probabilistic.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
