@@ -1,21 +1,20 @@
 #ifndef MONTECARLO_H
 #define MONTECARLO_H
 
-#include <QObject>
+#include <QWidget>
 
-class MonteCarlo : public QObject
-{
+class MonteCarlo : public QWidget {
     Q_OBJECT
 
 public:
-    explicit MonteCarlo(QObject *parent = nullptr);
-
-    // Метод для проведения теста Миллера-Рабина
-    bool millerRabinTest(long long n, int k);
+    explicit MonteCarlo(QWidget *parent = nullptr);
 
 private:
-    // Вспомогательная функция для вычисления (a^b) % m
-    long long powerMod(long long a, long long b, long long m);
+    long long power_mod(long long a, long long b, long long m);
+    bool miller_rabin_test(long long n, int k);
+
+signals:
+
 };
 
 #endif // MONTECARLO_H
