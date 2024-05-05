@@ -80,7 +80,6 @@ void MainWindow::on_pushButton_5_clicked()
 {
     MonteCarlo *newWindow = new MonteCarlo(nullptr); // устанавливаем родителя как nullptr
     newWindow->setAttribute(Qt::WA_DeleteOnClose); // для автоматического удаления при закрытии
-    newWindow->setWindowTitle("Miller-Rabin Primality Test");
     newWindow->show(); // показать как отдельное окно
 }
 
