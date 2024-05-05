@@ -23,50 +23,45 @@ int nextInt(int n) // Generate a random number between 0 ~ n
         return (int)rtn;
 }
 
-
-int *gridSearch(int n)
+int *las_vegas(int n)
 {
-    // Allocate memory
     int *solution = new int[n];
-    memset(solution, 0, n * sizeof(int));
-
-    int    fail = TRUE;
-    short *blocked = NULL;
-
+    fill(solution, solution + n, 0); //массив решений, индекс - строка; значение - столбец
+    int fail = TRUE; //алгоритм работает, пока не найдет решение
+    int *blocked = NULL; //клетки, в которые нельзя поставить ферзя
     while (fail)
     {
         int row, col, k, d;
-
-        if (blocked)
-            delete blocked; blocked = NULL;
-        // Initially all false
-        blocked = new short[n * n];
-        memset(blocked, 0, n * n * sizeof(short));
-        nTrials++; // Number of trials plus one
-
+        if (blocked) { //если решение не найдено - алгоритм начинает сначала
+            delete blocked;
+            blocked = NULL;
+        }
+        blocked = new int[n * n];
+        fill(blocked, blocked + n * n, 0);
+        nTrials++; // Количество проходов увеличивается
         for (row = 0; row < n; row++)
         {
-            col = nextInt(n); // Get next column number as a random integer
-            for (k = 0; blocked[row*n + col] && k < n; k++)
+            col = nextInt(n); // выбираем случайный столбец
+            for (k = 0; blocked[row*n + col] && k < n; k++) { //если клетка занята - выбирается следующий столбец
                 col = (col + 1) % n;
-            if (blocked[row*n + col])
+            }
+            if (blocked[row*n + col]) {
                 break;
+            }
             solution[row] = col;
             for (k = row + 1; k < n; k++)
             {
-                blocked[k*n + col] = TRUE;
-                // row - col
+                blocked[k*n + col] = TRUE; //блокировка по столбцу
                 d = k - (row - col);
                 if (d >= 0 && d < n)
-                    blocked[k*n + d] = TRUE;
-                // row + col
+                    blocked[k*n + d] = TRUE; //блокировка по диагонали
                 d = (row + col) - k;
                 if (d >= 0 && d < n)
-                    blocked[k*n + d] = TRUE;
-            } // end for k
-        } // end for row
+                    blocked[k*n + d] = TRUE; //блокировка по другой диагонали
+            }
+        }
         fail = row < n;
-    } // end while fail
+    }
     return solution;
 }
 
@@ -105,18 +100,14 @@ void lasvegas::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    int gridSize = width() / N;
-
-
-    QPixmap image("/Users/n0m1n4t3d/Downloads/queen.jpg");
-    // Рисуем шахматную доску
-    int   *solution; // This is an array to store the solution in a permutation of [0, 1, 2, ..., N]
+    double gridSize = width() / N;
+    QPixmap image("/Users/n0m1n4t3d/Downloads/queen.png");
+    int   *solution;
     std::vector<std::pair<int,int>> queens = {};
-    srand((int)time(NULL)); // Initialize the random sequence
+    srand((int)time(NULL));
 
-    solution = gridSearch(N); // Find a valid solution by Probabilistic Algorithm
+    solution = las_vegas(N);
 
-    // Print the valid board
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
@@ -130,14 +121,13 @@ void lasvegas::paintEvent(QPaintEvent *event)
     std::sort(queens.begin(), queens.end(), std::greater<>());
     for (int row = 0; row < N; ++row) {
         for (int col = 0; col < N; ++col) {
+            QColor color = (row + col) % 2 == 0 ? Qt::white : Qt::darkGray;
             if (queens[queens.size() - 1].first == row and queens[queens.size() - 1].second == col) {
-                QColor color = Qt::white;
                 painter.fillRect(col * gridSize, row * gridSize, gridSize, gridSize, color);
                 painter.drawPixmap(col * gridSize, row * gridSize, gridSize, gridSize, image);
                 queens.pop_back();
             }
             else {
-                QColor color = (row + col) % 2 == 0 ? Qt::white : Qt::darkGray;
                 painter.fillRect(col * gridSize, row * gridSize, gridSize, gridSize, color);
             }
         }

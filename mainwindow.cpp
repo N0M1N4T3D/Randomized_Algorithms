@@ -26,7 +26,7 @@ void MainWindow::on_pushButton_clicked()
     numerical_probabilistic *newWindow = new numerical_probabilistic();
 
     bool ok;
-    n = QInputDialog::getDouble(this, "Введите число", "Введите значение n:", 100000, 0, 100000000, 2, &ok);
+    n = QInputDialog::getDouble(this, "Введите число", "Введите значение n:", 100000, 0, 1000000000, 2, &ok);
     if (ok) {
         // Устанавливаем параметры нового окна
         newWindow->setFixedSize(800, 800);

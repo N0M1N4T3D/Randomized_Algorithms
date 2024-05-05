@@ -1,59 +1,61 @@
-// sherwood.cpp
-
 #include "sherwood.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTextEdit>
-#include <QMessageBox> // Для вывода сообщений об ошибке
+#include <QMessageBox>
 
 sherwood::sherwood(QApplication *app, QWidget *parent)
-    : QMainWindow(parent), m_app(app)
-{
-    // Конструктор принимает указатель на QApplication и сохраняет его
+    : QMainWindow(parent), m_app(app) {
 }
 
 void sherwood::mainp()
 {
-    // Создание главного окна
     QWidget *window = new QWidget();
     window->setWindowTitle("Шервудский бинарный поиск");
 
-    // Создание элементов интерфейса
     QVBoxLayout *layout = new QVBoxLayout(window);
+
     QLabel *labelUpper = new QLabel("Введите верхнюю границу массива (максимальное число):");
     QLineEdit *lineEditUpper = new QLineEdit;
-    QLabel *labelTarget = new QLabel("Введите целевое число для поиска:");
-    QLineEdit *lineEditTarget = new QLineEdit;
-    QPushButton *searchButton = new QPushButton("Поиск");
-    QTextEdit *resultTextEdit = new QTextEdit;
-    resultTextEdit->setReadOnly(true);
-
     layout->addWidget(labelUpper);
     layout->addWidget(lineEditUpper);
+
+    QLabel *labelLower = new QLabel("Введите нижнюю границу массива (минимальное число):");
+    QLineEdit *lineEditLower = new QLineEdit;
+    layout->addWidget(labelLower);
+    layout->addWidget(lineEditLower);
+
+    QLabel *labelTarget = new QLabel("Введите целевое число для поиска:");
+    QLineEdit *lineEditTarget = new QLineEdit;
     layout->addWidget(labelTarget);
     layout->addWidget(lineEditTarget);
-    layout->addWidget(searchButton);
-    layout->addWidget(resultTextEdit);
 
+    QPushButton *searchButton = new QPushButton("Поиск");
+    layout->addWidget(searchButton);
+
+    QTextEdit *resultTextEdit = new QTextEdit;
+    resultTextEdit->setReadOnly(true);
+    layout->addWidget(resultTextEdit);
     // Соединение кнопки с функцией поиска
     connect(searchButton, &QPushButton::clicked, [=]() {
         QString upperText = lineEditUpper->text();
+        QString lowerText = lineEditLower->text();
         QString targetText = lineEditTarget->text();
 
-        bool ok1, ok2;
+        bool ok1, ok2, ok3;
         int upperBound = upperText.toInt(&ok1);
-        int target = targetText.toInt(&ok2);
+        int lowerBound = lowerText.toInt(&ok2);
+        int target = targetText.toInt(&ok3);
 
-        if (ok1 && ok2 && upperBound > 0 && target > 0 && target <= upperBound) {
-            // Создаем массив для поиска
+        if (ok1 && ok2 && ok3 && upperBound >= 0 && lowerBound >= 0 && target >= 0 &&
+            lowerBound <= upperBound && target >= lowerBound && target <= upperBound) {
             QVector<int> arr;
-            for (int i = 1; i <= upperBound; ++i) {
+            for (int i = lowerBound; i <= upperBound; ++i) {
                 arr.append(i);
             }
 
-            // Выполняем бинарный поиск
             int index = sherwoodBinarySearch(arr, target, resultTextEdit);
             if (index != -1) {
                 resultTextEdit->append(QString("Элемент %1 найден по индексу: %2").arg(target).arg(index));
@@ -61,12 +63,10 @@ void sherwood::mainp()
                 resultTextEdit->append(QString("Элемент %1 не найден в массиве.").arg(target));
             }
         } else {
-            // Выводим сообщение об ошибке, если ввод некорректен
-            QMessageBox::warning(window, "Ошибка", "Введите корректные значения верхней границы и целевого числа.");
+            QMessageBox::warning(window, "Ошибка", "Введите корректные значения границ и целевого числа.");
         }
     });
 
-    // Установка макета для главного окна и его отображение
     window->setLayout(layout);
     window->show();
 }
@@ -97,6 +97,5 @@ int sherwood::sherwoodBinarySearch(const QVector<int> &arr, int value, QTextEdit
 
 sherwood::~sherwood()
 {
-    // Освобождение памяти, выделенной для интерфейса
-    delete m_app; // Необходимо освободить ресурсы QApplication
+    delete m_app;
 }
