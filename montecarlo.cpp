@@ -89,6 +89,7 @@ long long MonteCarlo::power_mod(long long a, long long b, long long m) {
     return result;
 }
 
+
 bool MonteCarlo::miller_rabin_test(long long n, int k) {
     if (n <= 1)
         return false;
@@ -107,7 +108,7 @@ bool MonteCarlo::miller_rabin_test(long long n, int k) {
     for (int i = 0; i < k; i++) {
         long long a = 2 + rand() % (n - 3);
         long long x = power_mod(a, d, n);
-        if (x == 1) {
+        if (x == 1 || x == n - 1) {
             continue;
         }
         bool prime = false;
@@ -117,7 +118,7 @@ bool MonteCarlo::miller_rabin_test(long long n, int k) {
             if (x == 1) {
                 return false;
             }
-            if (x == n - 1) {
+            else {
                 prime = true;
                 break;
             }
