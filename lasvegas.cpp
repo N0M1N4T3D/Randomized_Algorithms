@@ -6,7 +6,7 @@
 #include <iostream>
 #include <ctime>
 #include <vector>
-extern double n;
+extern long long n;
 #define N n
 using namespace std;
 enum { FALSE, TRUE };

@@ -5,7 +5,7 @@
 #include "lasvegas.h"
 #include "sherwood.h"
 #include "montecarlo.h"
-uint64_t n;
+long long n;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
