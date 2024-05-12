@@ -51,8 +51,10 @@ void numerical_probabilistic::paintEvent(QPaintEvent *event) {
     }
     pi = 4.0 * count / n;
     p.setPen (QPen(Qt::black,Qt::SolidLine));
-    p.drawText(QRect(0, 0, width()/ 3 * 4, 25), Qt::AlignCenter, "Количество испытаний (n): " + QString::number(n, 'd', 0));
-    p.drawText(QRect(0, 25, width()/ 3 * 4, 25), Qt::AlignCenter, "Приближенное значение числа Пи: " + QString::number(pi, 'f', 10));
+    p.drawText(QRect(0, 0, width()/ 3 * 4, 25), Qt::AlignCenter,
+    "Количество испытаний (n): " + QString::number(n, 'd', 0));
+    p.drawText(QRect(0, 25, width()/ 3 * 4, 25), Qt::AlignCenter,
+    "Приближенное значение числа Пи: " + QString::number(pi, 'f', 10));
 }
 
 numerical_probabilistic::~numerical_probabilistic()
@@ -60,4 +62,5 @@ numerical_probabilistic::~numerical_probabilistic()
     // Освобождение памяти, выделенной для интерфейса
     // Например: delete ui;
 }
+
 

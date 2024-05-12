@@ -77,20 +77,19 @@ MonteCarlo::MonteCarlo(QWidget *parent) : QWidget(parent) {
     setLayout(layout);
 }
 
-long long MonteCarlo::power_mod(long long a, long long b, long long m) {
-    long long result = 1;
-    a = a % m;
-    while (b > 0) {
-        if (b & 1)
-            result = (result * a) % m;
-        b >>= 1;
-        a = (a * a) % m;
+unsigned long long MonteCarlo::power_mod(unsigned long long a, unsigned long long d, unsigned long long n) {
+    unsigned long long result = 1;
+    a = a % n;
+    while (d > 0) {
+        if (d & 1)
+            result = (result * a) % n;
+        d >>= 1;
+        a = (a * a) % n;
     }
     return result;
 }
-
-
-bool MonteCarlo::miller_rabin_test(long long n, int k) {
+// Функция для проверки числа на простоту с помощью теста Миллера-Рабина
+bool MonteCarlo::miller_rabin_test(unsigned long long n, int k) {
     if (n <= 1)
         return false;
     if (n <= 3)
@@ -98,7 +97,7 @@ bool MonteCarlo::miller_rabin_test(long long n, int k) {
     if (n % 2 == 0)
         return false;
 
-    long long d = n - 1;
+    unsigned long long d = n - 1;
     int s = 0;
     while (d % 2 == 0) {
         d /= 2;
@@ -106,19 +105,18 @@ bool MonteCarlo::miller_rabin_test(long long n, int k) {
     }
 
     for (int i = 0; i < k; i++) {
-        long long a = 2 + rand() % (n - 3);
-        long long x = power_mod(a, d, n);
+        unsigned long long a = 2 + rand() % (n - 3);
+        unsigned long long x = power_mod(a, d, n);
         if (x == 1 || x == n - 1) {
             continue;
         }
         bool prime = false;
         for (int j = 1; j < s; j++) {
-            long long r = pow(2,j) * d;
-            x = power_mod(a,r,n);
+            x = power_mod(x,2,n);
             if (x == 1) {
                 return false;
             }
-            else {
+            if (x == n - 1) {
                 prime = true;
                 break;
             }
@@ -128,3 +126,4 @@ bool MonteCarlo::miller_rabin_test(long long n, int k) {
     }
     return true;
 }
+
